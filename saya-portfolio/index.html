@@ -1,0 +1,686 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SAYA MATSUDA | Portfolio</title>
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Sans+JP:wght@400;500;700&family=Shippori+Mincho:wght@500;700&display=swap" rel="stylesheet">
+  
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <div class="ambient-background">
+    <div class="noise-overlay"></div>
+    <div class="orb orb-hero" id="orb-hero"></div>
+    <div class="orb orb-about" id="orb-about"></div>
+    <div class="orb orb-work1" id="orb-work1"></div> 
+    <div class="orb orb-work2" id="orb-work2"></div> 
+    <div class="orb orb-contact" id="orb-contact"></div>
+  </div>
+
+  <nav class="nav-fixed">
+    <a href="#hero" class="logo">SAYA.</a>
+    <div class="nav-menu">
+      <a href="#about">About</a>
+      <a href="#work-start">Work</a>
+      <a href="#contact">Contact</a>
+    </div>
+  </nav>
+
+  <header id="hero" class="section hero-section" data-orb="orb-hero">
+    <div class="container hero-container">
+      <div class="hero-content">
+        <h1 class="hero-title">
+          <span class="block-reveal">気配を、</span><br>
+          <span class="block-reveal">デザインする。</span>
+        </h1>
+        <p class="hero-sub">
+          言葉と形の間にある空気感を翻訳し、<br>
+          記憶に静かに残る体験をつくります。
+        </p>
+      </div>
+    </div>
+    
+    <div class="scroll-indicator">
+      <span class="scroll-text">Scroll</span>
+      <div class="scroll-line"></div>
+    </div>
+  </header>
+
+  <section id="about" class="section about-section" data-orb="orb-about">
+    <div class="container">
+      <h2 class="section-heading mb-big">ABOUT</h2>
+
+      <div class="about-grid reveal">
+        <div class="about-col">
+          <h3 class="col-title">Profile</h3>
+          <p class="text-bold">松田 紗亜弥 / Saaya Matsuda</p>
+          <p class="text-body mt-2">
+            2007年生まれ、18歳。神山まるごと高専3年<br>
+            デザインエンジニアリング学科在籍。<br>
+            バレエと落書き帳に絵を描くことに<br>打ち込んでいた幼少期、<br>
+            「表現すること」にずっと興味を持ち続けています。<br>
+            一度始めたことは途中で投げ出さない<br>「根性」と「素直さ」が取り柄です。
+          </p>
+        </div>
+
+        <div class="about-col">
+          <h3 class="col-title">Philosophy</h3>
+          <p class="text-highlight">「人 to 人」</p>
+          <p class="text-body mt-2">
+            人から人へ想いや価値観が伝染していく<br>
+            表層を飾るだけではない<br>
+            心を震わす表現を作ること
+          </p>
+        </div>
+
+        <div class="about-col">
+          <h3 class="col-title">Skills</h3>
+          <ul class="skills-simple-list">
+            <li>
+              <span class="skill-name">Figma</span>
+              <div class="skill-line"><div class="skill-fill" style="width: 80%"></div></div>
+            </li>
+            <li>
+              <span class="skill-name">Photoshop</span>
+              <div class="skill-line"><div class="skill-fill" style="width: 70%"></div></div>
+            </li>
+            <li>
+              <span class="skill-name">Illustrator</span>
+              <div class="skill-line"><div class="skill-fill" style="width: 75%"></div></div>
+            </li>
+            <li>
+              <span class="skill-name">HTML / CSS</span>
+              <div class="skill-line"><div class="skill-fill" style="width: 60%"></div></div>
+            </li>
+            <li>
+              <span class="skill-name">Premiere Pro</span>
+              <div class="skill-line"><div class="skill-fill" style="width: 50%"></div></div>
+            </li>
+            <li>
+              <span class="skill-name">Lightroom</span>
+              <div class="skill-line"><div class="skill-fill" style="width: 50%"></div></div>
+            </li>
+            <li>
+              <span class="skill-name">Blender</span>
+              <div class="skill-line"><div class="skill-fill" style="width: 30%"></div></div>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div id="work-start" data-orb="orb-work1"></div>
+  
+  <main class="work-main">
+    
+    <div class="container" style="padding-top: 100px;">
+      <h2 class="section-heading mb-big">WORK</h2>
+      <p style="margin-bottom: 4rem;">Scroll Down</p>
+    </div>
+
+    <section class="project-section" id="pj01">
+      <div class="project-container">
+        <div class="text-side">
+          <div class="sticky-title-wrapper">
+            <span class="pj-number">01</span>
+            <h2 class="pj-title">映画と森night<br><span class="pj-sub">企画・イベント開催</span></h2>
+            <p class="pj-category">Planning / Exhibition</p>
+          </div>
+
+          <div class="steps-wrapper">
+            <div class="step" data-target="pj01-img1">
+              <h3 class="step-catch">「知る」から<br>「感じる」へ。</h3>
+              <p class="step-desc">
+                ただ写真を見るだけでなく、その人の人生に入り込む体験を。<br>
+                27名の被写体それぞれの「声」を聞きながら巡る、没入型の展示構成を計画しました。
+              </p>
+            </div>
+            <div class="step" data-target="pj01-img2">
+              <h3 class="step-catch">空間ごとの<br>物語。</h3>
+              <p class="step-desc">
+                会場を3つのエリアにゾーニング。<br>
+                「出会い」「対話」「共鳴」という順序で、鑑賞者の感情曲線に合わせた展示設計を行っています。
+              </p>
+            </div>
+            <div class="step" data-target="pj01-img3">
+              <h3 class="step-catch">余白の<br>美学。</h3>
+              <p class="step-desc">
+                情報の羅列を避け、あえて余白を多く取ることで、<br>
+                鑑賞者が自分自身の記憶と重ね合わせる時間を生み出しました。
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <div class="visual-side">
+          <div class="sticky-visual-stage">
+            <div class="visual-group active" id="pj01-img1">
+              <div class="grid-1">
+                <figure><img src="assets/portfolio_kamiyama.jpg" alt=""><figcaption>Main Exhibition Hall</figcaption></figure>
+              </div>
+            </div>
+            <div class="visual-group" id="pj01-img2">
+              <div class="grid-1">
+                <figure><img src="assets/portfolio_mori_instagram.png" alt=""><figcaption>Main Exhibition Hall</figcaption></figure>
+              </div>
+            </div>
+            <div class="visual-group" id="pj01-img3">
+              <div class="grid-1">
+                <figure><img src="assets/portfolio_mori_fund.png" alt=""><figcaption>Main Exhibition Hall</figcaption></figure>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="project-section project--flip" id="pj02">
+      <div class="project-container">
+        <div class="text-side">
+          <div class="sticky-title-wrapper">
+            <span class="pj-number">02</span>
+            <h2 class="pj-title">映画と森night<br><span class="pj-sub">デザイン</span></h2>
+            <p class="pj-category">Art Direction / Editorial</p>
+          </div>
+          <div class="steps-wrapper">
+            <div class="step" data-target="pj02-img1">
+              <h3 class="step-catch">言葉の<br>体温。</h3>
+              <p class="step-desc">
+                インタビュー集のブックデザイン。文字の組み方、紙の選定において、話者の体温が指先から伝わるような質感を目指しました。
+              </p>
+            </div>
+            <div class="step" data-target="pj02-img2">
+              <h3 class="step-catch">日常を<br>切り取る。</h3>
+              <p class="step-desc">
+                キービジュアルには、特定の誰かではなく「どこにでもありそうな風景」を採用。誰もが当事者になれる空気感を演出しています。
+              </p>
+            </div>
+            <div class="step" data-target="pj02-img3">
+              <h3 class="step-catch">言葉の<br>体温。</h3>
+              <p class="step-desc">
+                インタビュー集のブックデザイン。文字の組み方、紙の選定において、話者の体温が指先から伝わるような質感を目指しました。
+              </p>
+            </div>
+          </div>
+        </div>
+        <div class="visual-side">
+          <div class="sticky-visual-stage">
+            <div class="visual-group active" id="pj02-img1">
+              <div class="grid-1">
+                <figure><img src="assets/portfolio_mori_web.jpg" alt=""><figcaption>Main Exhibition Hall</figcaption></figure>
+              </div>
+            </div>
+            <div class="visual-group" id="pj02-img2">
+              <div class="grid-1">
+                <figure><img src="assets/portfolio_mori_sticker.jpg" alt=""><figcaption>Main Exhibition Hall</figcaption></figure>
+              </div>
+            </div>
+            <div class="visual-group" id="pj02-img3">
+              <div class="grid-1">
+                <figure><img src="assets/portfolio_mori_flyer.jpg" alt=""><figcaption>Main Exhibition Hall</figcaption></figure>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="project-section" id="pj03">
+      <div class="project-container">
+        <div class="text-side">
+          <div class="sticky-title-wrapper">
+            <span class="pj-number">03</span>
+            <h2 class="pj-title">私の自慢の隣人展<br><span class="pj-sub">企画・展示</span></h2>
+            <p class="pj-category">Planning / Exhibition</p>
+          </div>
+
+          <div class="steps-wrapper">
+            <div class="step" data-target="pj03-img1">
+              <h3 class="step-catch">「知る」から<br>「感じる」へ。</h3>
+              <p class="step-desc">
+                ただ写真を見るだけでなく、その人の人生に入り込む体験を。<br>
+                27名の被写体それぞれの「声」を聞きながら巡る、没入型の展示構成を計画しました。
+              </p>
+            </div>
+            <div class="step" data-target="pj03-img2">
+              <h3 class="step-catch">空間ごとの<br>物語。</h3>
+              <p class="step-desc">
+                会場を3つのエリアにゾーニング。<br>
+                「出会い」「対話」「共鳴」という順序で、鑑賞者の感情曲線に合わせた展示設計を行っています。
+              </p>
+            </div>
+            <div class="step" data-target="pj03-img3">
+              <h3 class="step-catch">余白の<br>美学。</h3>
+              <p class="step-desc">
+                情報の羅列を避け、あえて余白を多く取ることで、<br>
+                鑑賞者が自分自身の記憶と重ね合わせる時間を生み出しました。
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <div class="visual-side">
+          <div class="sticky-visual-stage">
+            <div class="visual-group active" id="pj03-img1">
+              <div class="grid-1">
+                <figure><img src="assets/portfolio_rinjin_think.jpg" alt=""><figcaption>Main Exhibition Hall</figcaption></figure>
+              </div>
+            </div>
+            <div class="visual-group" id="pj03-img2">
+              <div class="grid-1">
+                <figure><img src="assets/portfolio_rinjin_panel.png" alt=""><figcaption>Main Exhibition Hall</figcaption></figure>
+              </div>
+            </div>
+            <div class="visual-group" id="pj03-img3">
+              <div class="grid-1">
+                <figure><img src="assets/portfolio_rinjin_look.png" alt=""><figcaption>Main Exhibition Hall</figcaption></figure>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="marquee-section">
+      <div class="marquee-track">
+        <div class="marquee-content">
+          <img src="assets/portfolio_rinjin_tenji01.png" alt="">
+          <img src="assets/portfolio_rinjin_tenji02.png" alt="">
+          <img src="assets/portfolio_rinjin_tenji03.png" alt="">
+          <img src="assets/portfolio_rinjin_tenji04.png" alt="">
+          <img src="assets/portfolio_rinjin_tenji05.png" alt="">
+          <img src="assets/portfolio_rinjin_tenji06.png" alt="">
+          <img src="assets/portfolio_rinjin_tenji07.png" alt="">
+          <img src="assets/portfolio_rinjin_tenji08.png" alt="">
+        </div>
+        <div class="marquee-content" aria-hidden="true">
+          <img src="assets/portfolio_rinjin_tenji01.png" alt="">
+          <img src="assets/portfolio_rinjin_tenji02.png" alt="">
+          <img src="assets/portfolio_rinjin_tenji03.png" alt="">
+          <img src="assets/portfolio_rinjin_tenji04.png" alt="">
+          <img src="assets/portfolio_rinjin_tenji05.png" alt="">
+          <img src="assets/portfolio_rinjin_tenji06.png" alt="">
+          <img src="assets/portfolio_rinjin_tenji07.png" alt="">
+          <img src="assets/portfolio_rinjin_tenji08.png" alt="">
+        </div>
+      </div>
+    </section>
+
+    <section class="project-section project--flip" id="pj04">
+  <div class="project-container">
+    <div class="text-side">
+      <div class="sticky-title-wrapper">
+        <span class="pj-number">04</span>
+        <h2 class="pj-title">私の自慢の隣人展<br><span class="pj-sub">デザイン</span></h2>
+        <p class="pj-category">Art Direction / Editorial</p>
+      </div>
+
+      <div class="steps-wrapper">
+        <div class="step active" data-target="pj04-img1">
+          <h3 class="step-catch">言葉の<br>体温。</h3>
+          <p class="step-desc">
+            インタビュー集のブックデザイン。文字の組み方、紙の選定において、話者の体温が指先から伝わるような質感を目指しました。
+          </p>
+        </div>
+
+        <div class="step" data-target="pj04-img2">
+          <h3 class="step-catch">日常を<br>切り取る。</h3>
+          <p class="step-desc">
+            キービジュアルには、特定の誰かではなく「どこにでもありそうな風景」を採用。誰もが当事者になれる空気感を演出しています。
+          </p>
+        </div>
+
+        <div class="step" data-target="pj04-img3">
+          <h3 class="step-catch">視線の<br>余白。</h3>
+          <p class="step-desc">
+            文字量と余白のバランスを整え、読みのリズムが途切れないように構成。静かに没入できるページ体験を設計しました。
+          </p>
+        </div>
+
+        <div class="step" data-target="pj04-img4">
+          <h3 class="step-catch">触れる<br>手ざわり。</h3>
+          <p class="step-desc">
+            ステッカー／印刷物は、触ったときの「軽さ」と「温度」を意識。日常に馴染みながらも、記憶に残る質感を狙いました。
+          </p>
+        </div>
+
+        <div class="step" data-target="pj04-img5">
+          <h3 class="step-catch">配布で<br>完結。</h3>
+          <p class="step-desc">
+            展示空間だけでなく、持ち帰ったあとも体験が続くように。情報の粒度と余韻の残し方を調整しています。
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <div class="visual-side">
+      <div class="sticky-visual-stage">
+        <div class="visual-group active" id="pj04-img1">
+          <div class="grid-1">
+            <figure>
+              <img src="assets/portfolio_rinjin_card01.png" alt="隣人展 デザイン 1">
+              <figcaption>Main Exhibition Hall</figcaption>
+            </figure>
+          </div>
+        </div>
+
+        <div class="visual-group" id="pj04-img2">
+          <div class="grid-1">
+            <figure>
+              <img src="assets/portfolio_rinjin_card02.png" alt="隣人展 デザイン 2">
+              <figcaption>Main Exhibition Hall</figcaption>
+            </figure>
+          </div>
+        </div>
+
+        <div class="visual-group" id="pj04-img3">
+          <div class="grid-1">
+            <figure>
+              <img src="assets/portfolio_rinjin_card03.png" alt="隣人展 デザイン 3">
+              <figcaption>Main Exhibition Hall</figcaption>
+            </figure>
+          </div>
+        </div>
+
+        <div class="visual-group" id="pj04-img4">
+          <div class="grid-1">
+            <figure>
+              <img src="assets/portfolio_rinjin_sticker01.png" alt="隣人展 ステッカー 1">
+              <figcaption>Main Exhibition Hall</figcaption>
+            </figure>
+          </div>
+        </div>
+
+        <div class="visual-group" id="pj04-img5">
+          <div class="grid-1">
+            <figure>
+              <img src="assets/portfolio_rinjin_sticker02.png" alt="隣人展 ステッカー 2">
+              <figcaption>Main Exhibition Hall</figcaption>
+            </figure>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+    <section class="project-section" id="pj05">
+      <div class="project-container">
+        <div class="text-side">
+          <div class="sticky-title-wrapper">
+            <span class="pj-number">05</span>
+            <h2 class="pj-title">まるごと祭 2024</h2>
+            <p class="pj-category">Rebranding / Graphic</p>
+          </div>
+          <div class="steps-wrapper">
+            <div class="step" data-target="pj05-img1">
+              <h3 class="step-catch">熱狂は<br>手作りだ。</h3>
+              <p class="step-desc">
+                均整の取れたデジタルデザインではなく、住民の手書き文字やイラストをコラージュ。不揃いな温かみをキービジュアルに定着させました。
+              </p>
+            </div>
+            <div class="step" data-target="pj05-img2">
+              <h3 class="step-catch">街全体を<br>ジャックする。</h3>
+              <p class="step-desc">
+                提灯、のぼり、法被。街のあらゆるタッチポイントにおいて、「祭り」の高揚感を統一したトーン＆マナーで展開しました。
+              </p>
+            </div>
+          </div>
+        </div>
+        <div class="visual-side">
+          <div class="sticky-visual-stage">
+            <div class="visual-group active" id="pj05-img1">
+              <div class="grid-1">
+                <figure><img src="assets/portfolio_marufes2024_caption.png" alt=""><figcaption>Main Exhibition Hall</figcaption></figure>
+              </div>
+            </div>
+            <div class="visual-group" id="pj05-img2">
+              <div class="grid-1">
+                <figure><img src="assets/portfolio_marufes2024_tapestry.jpg" alt=""><figcaption>Main Exhibition Hall</figcaption></figure>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="project-section project--flip" id="pj06">
+      <div class="project-container">
+        <div class="text-side">
+          <div class="sticky-title-wrapper">
+            <span class="pj-number">06</span>
+            <h2 class="pj-title">2025まるごと祭ステージ<br><span class="pj-sub">コンテンツ企画</span></h2>
+            <p class="pj-category">Direction</p>
+          </div>
+          <div class="steps-wrapper">
+            <div class="step" data-target="pj06-img1">
+              <h3 class="step-catch">言葉の<br>体温。</h3>
+              <p class="step-desc">
+                インタビュー集のブックデザイン。文字の組み方、紙の選定において、話者の体温が指先から伝わるような質感を目指しました。
+              </p>
+            </div>
+            <div class="step" data-target="pj06-img2">
+              <h3 class="step-catch">日常を<br>切り取る。</h3>
+              <p class="step-desc">
+                キービジュアルには、特定の誰かではなく「どこにでもありそうな風景」を採用。誰もが当事者になれる空気感を演出しています。
+              </p>
+            </div>
+            <div class="step" data-target="pj06-img3">
+              <h3 class="step-catch">言葉の<br>体温。</h3>
+              <p class="step-desc">
+                インタビュー集のブックデザイン。文字の組み方、紙の選定において、話者の体温が指先から伝わるような質感を目指しました。
+              </p>
+            </div>
+          </div>
+        </div>
+        <div class="visual-side">
+          <div class="sticky-visual-stage">
+            <div class="visual-group active" id="pj06-img1">
+              <div class="grid-1">
+                <figure><img src="assets/portfolio_2025stage_move.png" alt=""><figcaption>Main Exhibition Hall</figcaption></figure>
+              </div>
+            </div>
+            <div class="visual-group" id="pj06-img2">
+              <div class="grid-1">
+                <figure><img src="assets/portfolio_2025stage_mcnote.png" alt=""><figcaption>Main Exhibition Hall</figcaption></figure>
+              </div>
+            </div>
+            <div class="visual-group" id="pj06-img3">
+              <div class="grid-1">
+                <figure><img src="assets/portfolio_2025stage_mc.jpg" alt=""><figcaption>Main Exhibition Hall</figcaption></figure>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+
+    <section class="project-section project--flip" id="pj07">
+      <div class="project-container">
+        
+        <div class="text-side">
+          <div class="sticky-title-wrapper">
+            <span class="pj-number">Others</span>
+            <h2 class="pj-title">Graphic Works</h2>
+            <p class="pj-category">Logo / Package / Zine</p>
+          </div>
+          <div class="steps-wrapper">
+            <div class="step" data-target="pj07-img1">
+              <h3 class="step-catch">細部に、<br>宿る。</h3>
+              <p class="step-desc">
+                自主制作からクライアントワークまで。<br>
+                ロゴ、パッケージ、名刺など、媒体を問わず本質的な「らしさ」を形にするグラフィックワーク集です。
+              </p>
+            </div>
+            <div class="step" data-target="pj07-img2">
+              <h3 class="step-catch">自由な<br>表現。</h3>
+              <p class="step-desc">
+                Zineの制作やイラストレーションなど、個人の視点から生まれた実験的なアウトプット。制限のない場所での表現探求を続けています。
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <div class="visual-side">
+          <div class="sticky-visual-stage">
+            <div class="visual-group active" id="pj07-img1">
+              <div class="grid-1">
+                <figure><img src="https://placehold.co/1000x800/e0e0e0/333?text=Space+Design" alt=""><figcaption>Main Exhibition Hall</figcaption></figure>
+              </div>
+            </div>
+            <div class="visual-group" id="pj07-img2">
+              <div class="grid-1">
+                <figure><img src="https://placehold.co/1000x800/e0e0e0/333?text=Space+Design" alt=""><figcaption>Main Exhibition Hall</figcaption></figure>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+  </main>
+
+  <section id="contact" class="section contact-section" data-orb="orb-contact">
+    <div class="container narrow-container reveal">
+      <h2 class="section-heading text-center">CONTACT</h2>
+      <p class="text-body text-center mb-8">
+        お仕事のご相談やコラボレーションについて、<br>
+        下記フォームよりお気軽にご連絡ください。
+      </p>
+
+      <form id="contact-form" action="https://formspree.io/f/YOUR_ID_HERE" method="POST" class="contact-form">
+        <div class="form-group">
+          <label for="name">Name</label>
+          <input type="text" id="name" name="name" required placeholder="お名前">
+        </div>
+        <div class="form-group">
+          <label for="email">Email</label>
+          <input type="email" id="email" name="email" required placeholder="メールアドレス">
+        </div>
+        <div class="form-group">
+          <label for="message">Message</label>
+          <textarea id="message" name="message" rows="5" required placeholder="お問い合わせ内容"></textarea>
+        </div>
+        <button type="submit" class="submit-btn" id="submit-btn">
+          <span class="btn-text">Send Message</span>
+        </button>
+        <p id="form-status" class="form-status"></p>
+      </form>
+
+      <div class="social-links mt-8">
+        <a href="#" target="_blank">Instagram</a>
+        <a href="#" target="_blank">note</a>
+      </div>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <small>&copy; 2026 SAYA MATSUDA</small>
+  </footer>
+
+  <script>
+  document.addEventListener('DOMContentLoaded', () => {
+
+    // ▼ 1. Orb Animation (背景色の変化)
+    const orbOptions = { 
+      rootMargin: '-30% 0px -30% 0px', 
+      threshold: 0 
+    };
+    
+    const orbs = document.querySelectorAll('.orb');
+    const orbObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          orbs.forEach(o => o.classList.remove('active'));
+          const targetId = entry.target.getAttribute('data-orb');
+          if (targetId) {
+            const targetOrb = document.getElementById(targetId);
+            if (targetOrb) targetOrb.classList.add('active');
+          }
+        }
+      });
+    }, orbOptions); // ← ここをシンプルにしました
+
+    document.querySelectorAll('[data-orb]').forEach(el => orbObserver.observe(el));
+
+
+    // ▼ 2. Reveal Animation (ふわっと表示)
+    const revealObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('active');
+        }
+      });
+    }, { threshold: 0.1 });
+
+    document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
+
+
+    // ▼ 3. Scrollytelling (Work部分の画像切り替え)
+    const scrollyOptions = {
+      root: null,
+      rootMargin: '-10% 0px -40% 0px',
+      threshold: 0
+    };
+
+    const scrollyObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          const currentStep = entry.target;
+          const targetId = currentStep.getAttribute('data-target');
+
+          // activeの切り替え
+          document.querySelectorAll('.step').forEach(s => s.classList.remove('active'));
+          currentStep.classList.add('active');
+
+          // 画像の切り替え
+          const targetVisual = document.getElementById(targetId);
+          if (targetVisual) {
+            const parent = targetVisual.closest('.sticky-visual-stage');
+            if (parent) {
+              parent.querySelectorAll('.visual-group').forEach(el => {
+                el.classList.remove('active');
+              });
+            }
+            targetVisual.classList.add('active');
+          }
+        }
+      });
+    }, scrollyOptions);
+
+    document.querySelectorAll('.step').forEach(step => {
+      scrollyObserver.observe(step);
+    });
+
+
+    // ▼ 4. Fade Out Text (文字が薄くなる演出)
+    window.addEventListener('scroll', () => {
+      const steps = document.querySelectorAll('.step');
+      const vh = window.innerHeight;
+      const fadeStart = vh * 0.2;
+      const fadeEnd = vh * 0.15;
+
+      steps.forEach(step => {
+        const rect = step.getBoundingClientRect();
+        if (rect.top < fadeStart) {
+          let opacity = (rect.top - fadeEnd) / (fadeStart - fadeEnd);
+          opacity = Math.max(0, Math.min(1, opacity));
+          step.style.opacity = opacity;
+        } else {
+          step.style.opacity = 1;
+        }
+      });
+    });
+
+  }); 
+</script>
+</body>
+</html>
