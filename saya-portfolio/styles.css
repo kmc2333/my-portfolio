@@ -124,8 +124,8 @@ a { text-decoration: none; color: inherit; }
 }
 .hero-content { text-align: left; }
 .hero-title {
-  font-family: var(--font-sans); font-size: clamp(3rem, 9vw, 6.5rem); 
-  font-weight: 700; line-height: 1.1; letter-spacing: -0.03em; margin: 0;
+  font-family: var(--font-sans); font-size: clamp(2.5rem, 9vw, 6.5rem); 
+  font-weight: 400; line-height: 1.1; letter-spacing: -0.03em; margin: 0;
 }
 /* テキストを一文字ずつ出すなどの演出用ラッパー */
 .block-reveal { display: inline-block; }
