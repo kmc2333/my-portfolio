@@ -229,7 +229,7 @@ a { text-decoration: none; color: inherit; }
 }
 .step.active { opacity: 1; }
 
-.step-catch { font-family: var(--font-serif); font-size: 2rem; margin-bottom: 1.5rem; line-height: 1.4; }
+.step-catch { font-family: var(--font-serif); font-size: 3rem; margin-bottom: 1.5rem; line-height: 1.4; }
 .step-desc { font-size: 0.95rem; color: var(--text-secondary); max-width: 380px; }
 
 /* --- VISUAL SIDE --- */
