@@ -11,15 +11,15 @@
   --accent-color: #000;
 
   /* Orbs (Bright & Soft) */
-  --orb-hero: radial-gradient(circle, #ffca85 0%, rgba(255,202,133,0) 70%);
-  --orb-about: radial-gradient(circle, #ffb3c1 0%, rgba(255,179,193,0) 70%);
-  --orb-work1: radial-gradient(circle, #80ffe8 0%, rgba(128,255,232,0) 70%);
-  --orb-work2: radial-gradient(circle, #a0c4ff 0%, rgba(160,196,255,0) 70%);
-  --orb-contact: radial-gradient(circle, #ddd 0%, rgba(220,220,220,0) 70%);
+  --orb-hero: radial-gradient(circle, #ffca85 0%, rgba(255,202,133,0) 80%);
+  --orb-about: radial-gradient(circle, #ffb3c1 0%, rgba(255,179,193,0) 80%);
+  --orb-work1: radial-gradient(circle, #80ffe8 0%, rgba(128,255,232,0) 80%);
+  --orb-work2: radial-gradient(circle, #a0c4ff 0%, rgba(160,196,255,0) 80%);
+  --orb-contact: radial-gradient(circle, #ddd 0%, rgba(220,220,220,0) 80%);
 
   /* Fonts */
-  --font-sans: 'Inter', 'Noto Sans JP', sans-serif;
-  --font-serif: 'Shippori Mincho', serif;
+  --font-sans: 'BIZ UDPGothic', 'yu Gothic';
+  --font-serif: 'Toppan Bunkyu Mincho';
 
   /* Animation Speeds */
   --marquee-speed: 50s;
