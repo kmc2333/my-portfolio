@@ -11,11 +11,11 @@
   --accent-color: #000;
 
   /* Orbs (Bright & Soft) */
-  --orb-hero: radial-gradient(circle, #ffca85 0%, rgba(255,202,133,0) 80%);
-  --orb-about: radial-gradient(circle, #ffb3c1 0%, rgba(255,179,193,0) 80%);
+  --orb-hero: radial-gradient(circle, #fada77 0%, rgba(255,202,133,0) 80%);
+  --orb-about: radial-gradient(circle, #fc98aa 0%, rgba(255,179,193,0) 80%);
   --orb-work1: radial-gradient(circle, #80ffe8 0%, rgba(128,255,232,0) 80%);
-  --orb-work2: radial-gradient(circle, #a0c4ff 0%, rgba(160,196,255,0) 80%);
-  --orb-contact: radial-gradient(circle, #ddd 0%, rgba(220,220,220,0) 80%);
+  --orb-work2: radial-gradient(circle, #81b1ff 0%, rgba(160,196,255,0) 80%);
+  --orb-contact: radial-gradient(circle, #ccf984 0%, rgba(220,220,220,0) 80%);
 
   /* Fonts */
   --font-sans: 'Roboto', 'Noto Sans JP', sans-serif;
@@ -173,7 +173,7 @@ a { text-decoration: none; color: inherit; }
 /* Skills Bar */
 .skills-simple-list li { margin-bottom: 1.5rem; }
 .skill-name { display: block; font-size: 0.85rem; font-weight: 600; margin-bottom: 0.5rem; }
-.skill-line { width: 100%; height: 4px; background: #eee; position: relative; }
+.skill-line { width: 100%; height: 4px; background: #dadada; position: relative; }
 .skill-fill { height: 100%; background: #000; position: absolute; left: 0; top: 0; }
 
 /* =========================================
@@ -213,7 +213,7 @@ a { text-decoration: none; color: inherit; }
   padding-right: 2rem;
 }
 .pj-number {
-  font-family: var(--font-sans); font-weight: 700; font-size: 4rem; color: #eee; line-height: 1; display: block;
+  font-family: var(--font-sans); font-weight: 700; font-size: 4rem; color: #bfbfbf; line-height: 1; display: block;
 }
 .pj-title { font-size: 2rem; font-weight: 700; margin: 0.5rem 0; line-height: 1.3; }
 .pj-sub { display: block; font-size: 1.1rem; font-weight: 400; color: var(--text-secondary); }
@@ -229,7 +229,7 @@ a { text-decoration: none; color: inherit; }
 }
 .step.active { opacity: 1; }
 
-.step-catch { font-family: var(--font-serif); font-size: 3rem; margin-bottom: 1.5rem; line-height: 1.4; }
+.step-catch { font-family: var(--font-serif); font-size: 2.5rem; margin-bottom: 2rem; line-height: 1.5; }
 .step-desc { font-size: 0.95rem; color: var(--text-secondary); max-width: 380px; }
 
 /* --- VISUAL SIDE --- */
