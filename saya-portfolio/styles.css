@@ -18,8 +18,8 @@
   --orb-contact: radial-gradient(circle, #ddd 0%, rgba(220,220,220,0) 80%);
 
   /* Fonts */
-  --font-sans: 'Shippori Mincho', 'Yu Mincho', 'Noto Sans JP', sans-serif;
-  --font-serif: 'Toppan Bunkyu Mincho', 'yu Gothic', 'Noto Serif JP', serif;
+  --font-sans: 'Roboto', 'Noto Sans JP', sans-serif;
+  --font-serif: 'Toppan Bunkyu Mincho', 'yu mincho', 'Noto Serif JP', serif;
 
   /* Animation Speeds */
   --marquee-speed: 50s;
