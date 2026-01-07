@@ -518,8 +518,8 @@ figcaption {
 @keyframes gather {
   to {
     /* ★ご指定の集合場所★ */
-    top: -10%;
-    left: -5%;
+    top: -5%;
+    left: -3%;
     
     /* 集まりながら吸い込まれて消える */
     opacity: 0;
