@@ -417,3 +417,93 @@ figcaption {
   
   .contact-form { padding: 1.5rem; }
 }
+
+/* --- オープニングローダー --- */
+#opening-loader {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  background-color: #fff; /* 背景色：白 */
+  z-index: 9999; /* 最前面に表示 */
+  pointer-events: none; /* クリック無効化 */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: opacity 0.8s ease-out; /* 最後に消える時のふわっと感 */
+}
+
+/* 4秒後にJSでこのクラスがつくと消える */
+#opening-loader.loaded {
+  opacity: 0;
+  visibility: hidden;
+}
+
+/* 光の粒の共通設定 */
+.light-orb {
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  opacity: 0; /* 最初は隠しておく */
+  filter: blur(2px); /* 少しボヤッとさせて光っぽく */
+  
+  /* アニメーションの一括指定 */
+  /* 名前 | 時間 | イージング | 遅延 | 回数 | 方向 | 終了後の状態 */
+  animation: 
+    appear 0.5s ease-out forwards, /* 0.5秒でふわっと出現 */
+    float-pulse 2.5s ease-in-out infinite alternate, /* ぷかぷか・拡大縮小 */
+    gather 1s ease-in-out 3s forwards; /* 3秒後から1秒かけて集まる */
+}
+
+/* --- アニメーション定義 --- */
+
+/* 1. 出現 */
+@keyframes appear {
+  0% { opacity: 0; transform: scale(0); }
+  100% { opacity: 0.8; transform: scale(1); }
+}
+
+/* 2. ぷかぷか浮く & 10px→14pxへ拡大（scale 1.0 -> 1.4） */
+@keyframes float-pulse {
+  0% {
+    transform: translateY(0) scale(1);
+  }
+  100% {
+    transform: translateY(-20px) scale(1.4); /* 上に20px浮きながら大きくなる */
+  }
+}
+
+/* 3. Heroの黄色い場所（画面中央〜右下あたり）に集まる */
+@keyframes gather {
+  0% {
+    /* 現在の位置を維持 */
+  }
+  100% {
+    top: 60% !important;  /* ★集めたい縦の位置（Heroの黄色がある場所） */
+    left: 70% !important; /* ★集めたい横の位置 */
+    transform: scale(0.5); /* 集まる時に少し小さくして馴染ませる */
+    opacity: 0; /* 完全に透明になって消える */
+  }
+}
+
+/* --- 粒ごとの色と初期位置をランダムにする --- */
+
+/* 黄色系 */
+.light-orb:nth-child(1) { top: 20%; left: 20%; background: radial-gradient(circle, #ffd700, #fff); animation-delay: 0s, 0s, 2.5s; }
+.light-orb:nth-child(2) { top: 80%; left: 10%; background: radial-gradient(circle, #f0e68c, #fff); animation-delay: 0.2s, 0.2s, 2.6s; }
+.light-orb:nth-child(3) { top: 40%; left: 80%; background: radial-gradient(circle, #fffacd, #fff); animation-delay: 0.1s, 0.1s, 2.5s; }
+
+/* ピンク・オレンジ系 */
+.light-orb:nth-child(4) { top: 15%; left: 70%; background: radial-gradient(circle, #ffb6c1, #fff); animation-delay: 0.3s, 0.3s, 2.7s; }
+.light-orb:nth-child(5) { top: 60%; left: 30%; background: radial-gradient(circle, #ffa07a, #fff); animation-delay: 0.1s, 0.4s, 2.6s; }
+
+/* 水色・緑系（アクセント） */
+.light-orb:nth-child(6) { top: 30%; left: 50%; background: radial-gradient(circle, #e0ffff, #fff); animation-delay: 0.4s, 0.1s, 2.5s; }
+.light-orb:nth-child(7) { top: 70%; left: 80%; background: radial-gradient(circle, #98fb98, #fff); animation-delay: 0.2s, 0.5s, 2.8s; }
+
+/* その他ランダム */
+.light-orb:nth-child(8) { top: 50%; left: 10%; background: radial-gradient(circle, #ffd700, #ffa500); animation-delay: 0.1s, 0.2s, 2.6s; }
+.light-orb:nth-child(9) { top: 90%; left: 50%; background: radial-gradient(circle, #ffc0cb, #fff); animation-delay: 0.5s, 0.3s, 2.7s; }
+.light-orb:nth-child(10) { top: 10%; left: 90%; background: radial-gradient(circle, #fffacd, #fff); animation-delay: 0.3s, 0.1s, 2.5s; }

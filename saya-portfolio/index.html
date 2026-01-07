@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>SAYA MATSUDA | Portfolio</title>
+  <title>SAAYA MATSUDA | Portfolio</title>
   
   <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -23,13 +23,26 @@
   </div>
 
   <nav class="nav-fixed">
-    <a href="#hero" class="logo">SAYA.</a>
+    <a href="#hero" class="logo">Saaya.</a>
     <div class="nav-menu">
       <a href="#about">About</a>
       <a href="#work-start">Work</a>
       <a href="#contact">Contact</a>
     </div>
   </nav>
+
+  <div id="opening-loader">
+    <div class="light-orb"></div>
+    <div class="light-orb"></div>
+    <div class="light-orb"></div>
+    <div class="light-orb"></div>
+    <div class="light-orb"></div>
+    <div class="light-orb"></div>
+    <div class="light-orb"></div>
+    <div class="light-orb"></div>
+    <div class="light-orb"></div>
+    <div class="light-orb"></div>
+  </div>
 
   <header id="hero" class="section hero-section" data-orb="orb-hero">
     <div class="container hero-container">
@@ -700,6 +713,16 @@
     });
 
   }); 
+
+  // ページの読み込みが終わってなくても、4秒経ったら強制的に開く
+window.addEventListener('DOMContentLoaded', () => {
+  const loader = document.getElementById('opening-loader');
+  
+  // 4000ミリ秒（4秒）後に .loaded クラスをつけてフェードアウト
+  setTimeout(() => {
+    loader.classList.add('loaded');
+  }, 3800); // アニメーションの終了と少し重ねるために3.8秒に設定
+});
 </script>
 </body>
 </html>
