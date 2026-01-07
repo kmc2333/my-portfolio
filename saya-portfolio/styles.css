@@ -431,8 +431,8 @@ figcaption {
   background-color: #fff;
   
   /* 6秒後に背景色だけ透明にする（大球は残る） */
-  animation: bg-fade-out 1.5s ease 6s forwards;
-  
+  animation: bg-fade-out 1.5s ease 6s forwards, send-to-back 0s linear 6s forwards;
+
   /* 終わったら下のサイトを操作できるようにする */
   pointer-events: none;
 }
@@ -482,8 +482,8 @@ figcaption {
    ========================================= */
 .small-orb {
   position: absolute;
-  width: 20px;
-  height: 20px;
+  width: 40px;
+  height: 40px;
   border-radius: 50%;
   opacity: 0; /* 最初は隠す */
   filter: blur(2px);
