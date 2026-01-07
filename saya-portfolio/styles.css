@@ -427,14 +427,15 @@ figcaption {
   height: 100vh;
   z-index: 9999;
   
+  /* 最初は最前面 */
+  z-index: 9999;
+  
   /* 背景色：白 */
   background-color: #fff;
   
-  /* 6秒後に背景色だけ透明にする（大球は残る） */
-  animation: 
-    bg-fade-out 1.5s ease 6s forwards,
-    send-to-back 0s linear 6s forwards;
-  /* 終わったら下のサイトを操作できるようにする */
+  /* 背景を透明にするアニメーション（z-indexの変更はJSに任せます） */
+  animation: bg-fade-out 1.5s ease 6s forwards;
+  
   pointer-events: none;
 }
 
@@ -442,6 +443,12 @@ figcaption {
 @keyframes bg-fade-out {
   0% { background-color: #ffffff; }
   100% { background-color: transparent; }
+}
+
+
+header, main, .hero, section {
+  position: relative; /* これがないとz-indexが効きません */
+  z-index: 10;        /* 背景(-1)より手前(10)にする */
 }
 
 /* =========================================
