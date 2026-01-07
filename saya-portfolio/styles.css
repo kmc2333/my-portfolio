@@ -427,48 +427,44 @@ figcaption {
   height: 100vh;
   z-index: 9999;
   
-  /* 最初は白背景 */
+  /* 背景色：白 */
   background-color: #fff;
   
-  /* 合計6秒のアニメーション終了後、背景色だけ透明にする 
-     (球は残すので display: none にはしない)
-  */
-  animation: bg-to-transparent 1.5s ease 6s forwards;
+  /* 6秒後に背景色だけ透明にする（大球は残る） */
+  animation: bg-fade-out 1.5s ease 6s forwards;
   
-  /* 背景が消えた後は、下のサイトをクリックできるようにする */
+  /* 終わったら下のサイトを操作できるようにする */
   pointer-events: none;
 }
 
-/* --- 背景を透明にするアニメーション --- */
-@keyframes bg-to-transparent {
-  0% { background-color: #fff; }
+/* 背景を消すアニメーション */
+@keyframes bg-fade-out {
+  0% { background-color: #ffffff; }
   100% { background-color: transparent; }
 }
 
-
 /* =========================================
-   主役：最後に残る大きな光の球
+   主役：最後に残る大球
    ========================================= */
 .final-big-orb {
-  /* 指定されたスタイル */
+  /* ご指定のスタイル */
   position: absolute;
-  top: -20%;    /* 集まる場所 */
-  left: -10%;   /* 集まる場所 */
+  top: -20%;
+  left: -10%;
   width: 60vw;
   height: 60vw;
   border-radius: 50%;
   filter: blur(80px);
+  /* 黄色のグラデーション */
   background: radial-gradient(circle, #fada77 0%, rgba(255,202,133,0) 80%);
   
   /* 最初は透明 */
   opacity: 0;
   
-  /* 6秒時点（小球が集まりきった瞬間）でフワッと現れる
-     同時に floatOrb（15秒ループ）も開始
-  */
+  /* 6秒時点（小球が集まりきった瞬間）で表示 */
   animation: 
-    big-orb-appear 1.5s ease 6s forwards,
-    floatOrb 15s infinite ease-in-out alternate 6s;
+    big-orb-appear 1s ease 6s forwards,
+    floatOrb 15s infinite ease-in-out alternate 6s; /* 登場と同時にゆらゆら開始 */
 }
 
 @keyframes big-orb-appear {
@@ -481,27 +477,26 @@ figcaption {
   100% { transform: translate(20px, 40px); }
 }
 
-
 /* =========================================
-   脇役：集まってくる小さな光の球 (20px)
+   脇役：集まってくる小球
    ========================================= */
 .small-orb {
   position: absolute;
   width: 20px;
   height: 20px;
   border-radius: 50%;
-  filter: blur(2px);
   opacity: 0; /* 最初は隠す */
-  
-  /* 全6秒の工程 
+  filter: blur(2px);
+
+  /* アニメーション構成（合計6秒）
      1. appear (0~2s): 出現
-     2. float (2~4s): ぷかぷか
-     3. gather (4~6s): 指定位置に集まる
+     2. float (2~4s): その場で浮遊
+     3. gather (4~6s): 左上へ移動
   */
   animation: 
     appear 2s ease-out forwards,
-    float-small 2s ease-in-out 2s infinite, /* 2秒待ってから開始 */
-    gather 2s ease-in-out 4s forwards;      /* 4秒待ってから開始 */
+    float-small 2s ease-in-out 2s infinite, /* 2秒待機して開始 */
+    gather 2s ease-in-out 4s forwards;      /* 4秒待機して開始 */
 }
 
 /* 1. 出現 */
@@ -510,43 +505,51 @@ figcaption {
   100% { opacity: 0.8; transform: scale(1); }
 }
 
-/* 2. ぷかぷか（小球用） */
+/* 2. 浮遊（小球用） */
 @keyframes float-small {
   0% { transform: translateY(0); }
-  50% { transform: translateY(-15px); }
+  50% { transform: translateY(-20px); }
   100% { transform: translateY(0); }
 }
 
-/* 3. 集まる（ここが重要！） */
+/* 3. 集合（ここを修正しました）
+   top/left を強制的に書き換えて移動させます
+*/
 @keyframes gather {
-  0% {
-    /* 今の場所を維持 */
-  }
-  100% {
-    /* ★ご指定の場所へ強制集合★ */
-    top: -20% !important;
-    left: -10% !important;
+  to {
+    /* ★ご指定の集合場所★ */
+    top: -20%;
+    left: -10%;
     
-    opacity: 0; /* 集まりながら消えて、大球にバトンタッチ */
-    transform: scale(0.5); 
+    /* 集まりながら吸い込まれて消える */
+    opacity: 0;
+    transform: scale(0.2); 
   }
 }
 
-/* --- 小球の色と出現位置のバラツキ設定 --- */
-/* カラフルに、かつ時間差(animation-delay)をつけて一つずつ出す */
+/* --- 小球の配置（ランダム） --- */
+/* animation-delayで出現タイミングをずらしています。
+   gatherアニメーションが4秒後から始まるように調整済みです。
+*/
 
-/* 黄色系 */
-.small-orb:nth-child(1) { top: 50%; left: 50%; background: #ffd700; animation-delay: 0s; }
-.small-orb:nth-child(2) { top: 20%; left: 80%; background: #fada77; animation-delay: 0.2s; }
-.small-orb:nth-child(3) { top: 80%; left: 20%; background: #fffacd; animation-delay: 0.4s; }
+/* 黄色・オレンジ系 */
+.small-orb:nth-child(1) { top: 50%; left: 50%; background: #ffd700; }
+.small-orb:nth-child(2) { top: 20%; left: 80%; background: #fada77; animation-delay: 0.2s, 2.2s, 4.2s; } 
+.small-orb:nth-child(3) { top: 80%; left: 20%; background: #fffacd; animation-delay: 0.4s, 2.4s, 4.4s; }
 
-/* ピンク・オレンジ系 */
-.small-orb:nth-child(4) { top: 30%; left: 20%; background: #ffb6c1; animation-delay: 0.6s; }
-.small-orb:nth-child(5) { top: 70%; left: 70%; background: #ffa07a; animation-delay: 0.8s; }
-.small-orb:nth-child(6) { top: 10%; left: 40%; background: #ff69b4; animation-delay: 1.0s; }
+/* ピンク系 */
+.small-orb:nth-child(4) { top: 30%; left: 20%; background: #ffb6c1; animation-delay: 0.6s, 2.6s, 4.6s; }
+.small-orb:nth-child(5) { top: 70%; left: 70%; background: #ffa07a; animation-delay: 0.8s, 2.8s, 4.8s; }
+.small-orb:nth-child(6) { top: 10%; left: 40%; background: #ff69b4; animation-delay: 1.0s, 3.0s, 5.0s; }
 
-/* 水色・緑系 */
-.small-orb:nth-child(7) { top: 60%; left: 90%; background: #e0ffff; animation-delay: 1.2s; }
-.small-orb:nth-child(8) { top: 90%; left: 40%; background: #98fb98; animation-delay: 1.4s; }
-.small-orb:nth-child(9) { top: 40%; left: 10%; background: #87cefa; animation-delay: 1.6s; }
-.small-orb:nth-child(10) { top: 15%; left: 60%; background: #dda0dd; animation-delay: 1.8s; }
+/* その他（水色など） */
+.small-orb:nth-child(7) { top: 60%; left: 90%; background: #e0ffff; animation-delay: 1.2s, 3.2s, 5.2s; }
+.small-orb:nth-child(8) { top: 90%; left: 40%; background: #98fb98; animation-delay: 1.4s, 3.4s, 5.4s; }
+.small-orb:nth-child(9) { top: 40%; left: 10%; background: #87cefa; animation-delay: 0.1s, 2.1s, 4.1s; }
+.small-orb:nth-child(10) { top: 15%; left: 60%; background: #dda0dd; animation-delay: 0.3s, 2.3s, 4.3s; }
+
+/* 補足：animation-delayの書き順
+  1つ目: appear (出現) の遅延
+  2つ目: float-small (浮遊) の遅延（基本2s + ズレ）
+  3つ目: gather (集合) の遅延（基本4s + ズレ）
+*/
