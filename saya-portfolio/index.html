@@ -741,6 +741,12 @@
 
     // ▼ 4. Fade Out Text (文字が薄くなる演出)
     window.addEventListener('scroll', () => {
+      if (window.matchMedia('(max-width: 900px)').matches) {
+        document.querySelectorAll('.step').forEach(step => {
+          step.style.opacity = 1;
+        });
+        return;
+      }
       const steps = document.querySelectorAll('.step');
       const vh = window.innerHeight;
       const fadeStart = vh * 0.2;
