@@ -28,6 +28,7 @@
       <a href="#about">About</a>
       <a href="#work-start">Work</a>
       <a href="#contact">Contact</a>
+      <a href="edit.html">Edit</a>
     </div>
   </nav>
 
@@ -520,6 +521,7 @@
       </div>
     </section>
 
+    <div id="custom-projects-slot"></div>
 
     <section class="project-section project--flip" id="pj07">
       <div class="project-container">
@@ -593,16 +595,6 @@
 
   </main>
 
-  <section id="custom-work" class="section custom-work-section">
-    <div class="container reveal">
-      <h2 class="section-heading mb-big">MY WORKS</h2>
-      <p class="text-body mb-8" id="custom-work-empty">
-        ここにあなた専用の追加プロジェクトが並びます。
-      </p>
-      <div class="custom-work-grid" id="custom-work-grid"></div>
-    </div>
-  </section>
-
   <section id="contact" class="section contact-section" data-orb="orb-contact">
     <div class="container narrow-container reveal">
       <h2 class="section-heading text-center">CONTACT</h2>
@@ -641,75 +633,6 @@
   <footer class="footer">
     <small>&copy; 2026 SAYA MATSUDA</small>
   </footer>
-
-  <button class="admin-toggle" id="admin-toggle" type="button" hidden>Admin</button>
-  <aside class="admin-panel" id="admin-panel" hidden>
-    <div class="admin-header">
-      <strong>Admin Mode</strong>
-      <button type="button" class="admin-close" id="admin-close">Close</button>
-    </div>
-    <p class="admin-note">
-      この編集機能はブラウザの保存領域に記録されます。別の端末では反映されません。
-    </p>
-
-    <div class="admin-section">
-      <h3 class="admin-title">Work 01 に追加</h3>
-      <form id="work1-form" class="admin-form">
-        <label>
-          タイトル
-          <input type="text" name="title" required placeholder="例：新しい切り口">
-        </label>
-        <label>
-          説明文
-          <textarea name="desc" rows="4" required placeholder="例：プロジェクトの背景や意図"></textarea>
-        </label>
-        <label>
-          画像URL
-          <input type="url" name="imageUrl" placeholder="https://...">
-        </label>
-        <label>
-          画像ファイル
-          <input type="file" name="imageFile" accept="image/*">
-        </label>
-        <button type="submit">追加する</button>
-      </form>
-      <div class="admin-list" id="work1-list"></div>
-    </div>
-
-    <div class="admin-section">
-      <h3 class="admin-title">新しいプロジェクト</h3>
-      <form id="project-form" class="admin-form">
-        <label>
-          タイトル
-          <input type="text" name="title" required placeholder="例：新しい企画">
-        </label>
-        <label>
-          サブタイトル
-          <input type="text" name="subtitle" placeholder="例：企画 / デザイン">
-        </label>
-        <label>
-          カテゴリ
-          <input type="text" name="category" placeholder="例：Branding / Visual">
-        </label>
-        <label>
-          説明文
-          <textarea name="desc" rows="4" required placeholder="例：プロジェクトの概要"></textarea>
-        </label>
-        <label>
-          画像URL
-          <input type="url" name="imageUrl" placeholder="https://...">
-        </label>
-        <label>
-          画像ファイル
-          <input type="file" name="imageFile" accept="image/*">
-        </label>
-        <button type="submit">追加する</button>
-      </form>
-      <div class="admin-list" id="project-list"></div>
-    </div>
-
-    <button type="button" class="admin-logout" id="admin-logout">ログアウト</button>
-  </aside>
 
   <script>
   document.addEventListener('DOMContentLoaded', () => {
@@ -809,22 +732,10 @@
       });
     });
 
-    const ADMIN_PASSWORD = 'change-me';
-    const adminParam = new URLSearchParams(window.location.search).get('admin');
-    const adminToggle = document.getElementById('admin-toggle');
-    const adminPanel = document.getElementById('admin-panel');
-    const adminClose = document.getElementById('admin-close');
-    const adminLogout = document.getElementById('admin-logout');
-    const work1Form = document.getElementById('work1-form');
-    const projectForm = document.getElementById('project-form');
-    const work1List = document.getElementById('work1-list');
-    const projectList = document.getElementById('project-list');
-    const work1Steps = document.getElementById('pj01-steps');
-    const work1Visuals = document.getElementById('pj01-visuals');
-    const customWorkGrid = document.getElementById('custom-work-grid');
-    const customWorkEmpty = document.getElementById('custom-work-empty');
+    const PROJECT_IDS = ['pj01', 'pj02', 'pj03', 'pj04', 'pj05', 'pj06'];
+    const customProjectsSlot = document.getElementById('custom-projects-slot');
 
-    const getStored = (key) => {
+    const getStoredArray = (key) => {
       try {
         return JSON.parse(localStorage.getItem(key) || '[]');
       } catch (err) {
@@ -832,252 +743,163 @@
       }
     };
 
+    const getStoredObject = (key) => {
+      try {
+        return JSON.parse(localStorage.getItem(key) || '{}');
+      } catch (err) {
+        return {};
+      }
+    };
+
     const setStored = (key, value) => {
       localStorage.setItem(key, JSON.stringify(value));
     };
 
-    const escapeHtml = (text) => {
-      return text
-        .replace(/&/g, '&amp;')
-        .replace(/</g, '&lt;')
-        .replace(/>/g, '&gt;')
-        .replace(/\n/g, '<br>');
-    };
-
-    const readFileAsDataUrl = (file) => {
-      return new Promise((resolve, reject) => {
-        const reader = new FileReader();
-        reader.onload = () => resolve(reader.result);
-        reader.onerror = () => reject(new Error('読み込みに失敗しました'));
-        reader.readAsDataURL(file);
-      });
-    };
-
-    const pickImage = async (fileInput, urlInput) => {
-      if (fileInput && fileInput.files && fileInput.files[0]) {
-        return readFileAsDataUrl(fileInput.files[0]);
+    const migrateLegacyExtras = () => {
+      const legacy = getStoredArray('work1Extras');
+      if (!legacy.length) return;
+      const extrasByProject = getStoredObject('projectExtras');
+      if (!extrasByProject.pj01) {
+        extrasByProject.pj01 = legacy;
+        setStored('projectExtras', extrasByProject);
       }
-      const url = urlInput ? urlInput.value.trim() : '';
-      return url;
+      localStorage.removeItem('work1Extras');
     };
 
-    const renderWork1Extras = () => {
-      if (!work1Steps || !work1Visuals) return;
-      work1Steps.querySelectorAll('.step[data-extra="1"]').forEach(el => el.remove());
-      work1Visuals.querySelectorAll('.visual-group[data-extra="1"]').forEach(el => el.remove());
+    const buildStep = (title, desc, targetId, extra) => {
+      const step = document.createElement('div');
+      step.className = 'step';
+      step.dataset.target = targetId;
+      if (extra) step.dataset.extra = '1';
 
-      const extras = getStored('work1Extras');
-      extras.forEach((item, index) => {
-        const targetId = `pj01-extra-${index + 1}`;
+      const catchTitle = document.createElement('h3');
+      catchTitle.className = 'step-catch';
+      catchTitle.textContent = title;
+      const paragraph = document.createElement('p');
+      paragraph.className = 'step-desc';
+      paragraph.textContent = desc;
 
-        const step = document.createElement('div');
-        step.className = 'step';
-        step.dataset.target = targetId;
-        step.dataset.extra = '1';
-        step.innerHTML = `
-          <h3 class="step-catch">${escapeHtml(item.title)}</h3>
-          <p class="step-desc">${escapeHtml(item.desc)}</p>
-        `;
-        work1Steps.appendChild(step);
-        observeStep(step);
+      step.appendChild(catchTitle);
+      step.appendChild(paragraph);
+      return step;
+    };
 
-        const visual = document.createElement('div');
-        visual.className = 'visual-group';
-        visual.id = targetId;
-        visual.dataset.extra = '1';
+    const buildVisual = (image, alt, targetId, extra) => {
+      const visual = document.createElement('div');
+      visual.className = 'visual-group';
+      visual.id = targetId;
+      if (extra) visual.dataset.extra = '1';
 
-        const grid = document.createElement('div');
-        grid.className = 'grid-1';
-        const figure = document.createElement('figure');
-        const img = document.createElement('img');
-        img.src = item.image;
-        img.alt = item.title;
-        figure.appendChild(img);
-        grid.appendChild(figure);
-        visual.appendChild(grid);
-        work1Visuals.appendChild(visual);
+      const grid = document.createElement('div');
+      grid.className = 'grid-1';
+      const figure = document.createElement('figure');
+      const img = document.createElement('img');
+      img.src = image;
+      img.alt = alt;
+      figure.appendChild(img);
+      grid.appendChild(figure);
+      visual.appendChild(grid);
+      return visual;
+    };
+
+    const renderProjectExtras = () => {
+      const extrasByProject = getStoredObject('projectExtras');
+
+      PROJECT_IDS.forEach(projectId => {
+        const section = document.getElementById(projectId);
+        if (!section) return;
+        const stepsWrapper = section.querySelector('.steps-wrapper');
+        const visuals = section.querySelector('.sticky-visual-stage');
+        if (!stepsWrapper || !visuals) return;
+
+        stepsWrapper.querySelectorAll('.step[data-extra="1"]').forEach(el => el.remove());
+        visuals.querySelectorAll('.visual-group[data-extra="1"]').forEach(el => el.remove());
+
+        const items = extrasByProject[projectId] || [];
+        items.forEach((item, index) => {
+          const targetId = `${projectId}-extra-${index + 1}`;
+          const step = buildStep(item.title, item.desc, targetId, true);
+          stepsWrapper.appendChild(step);
+          observeStep(step);
+          const visual = buildVisual(item.image, item.title, targetId, true);
+          visuals.appendChild(visual);
+        });
       });
     };
 
     const renderCustomProjects = () => {
-      if (!customWorkGrid || !customWorkEmpty) return;
-      const projects = getStored('customProjects');
-      customWorkGrid.innerHTML = '';
-      customWorkEmpty.style.display = projects.length ? 'none' : 'block';
+      if (!customProjectsSlot) return;
+      const projects = getStoredArray('customProjects');
+      customProjectsSlot.innerHTML = '';
 
-      projects.forEach(item => {
-        const card = document.createElement('article');
-        card.className = 'custom-card';
+      projects.forEach((item, index) => {
+        const section = document.createElement('section');
+        const shouldFlip = index % 2 === 1;
+        section.className = shouldFlip ? 'project-section project--flip' : 'project-section';
+        section.id = `custom-${item.id}`;
 
-        const media = document.createElement('div');
-        media.className = 'custom-card-media';
-        const img = document.createElement('img');
-        img.src = item.image;
-        img.alt = item.title;
-        media.appendChild(img);
+        const container = document.createElement('div');
+        container.className = 'project-container';
 
-        const body = document.createElement('div');
-        body.className = 'custom-card-body';
-        const kicker = document.createElement('p');
-        kicker.className = 'custom-card-kicker';
-        kicker.textContent = item.category || 'Personal';
-        const title = document.createElement('h3');
-        title.className = 'custom-card-title';
-        title.textContent = item.title;
-        body.appendChild(kicker);
-        body.appendChild(title);
+        const textSide = document.createElement('div');
+        textSide.className = 'text-side';
 
-        if (item.subtitle) {
-          const sub = document.createElement('p');
-          sub.className = 'custom-card-sub';
-          sub.textContent = item.subtitle;
-          body.appendChild(sub);
+        const stickyTitleWrapper = document.createElement('div');
+        stickyTitleWrapper.className = 'sticky-title-wrapper';
+        const number = document.createElement('span');
+        number.className = 'pj-number';
+        number.textContent = String(index + 7).padStart(2, '0');
+        const title = document.createElement('h2');
+        title.className = 'pj-title';
+        title.textContent = item.projectName || item.title;
+        if (item.tag) {
+          const lineBreak = document.createElement('br');
+          const sub = document.createElement('span');
+          sub.className = 'pj-sub';
+          sub.textContent = item.tag;
+          title.appendChild(lineBreak);
+          title.appendChild(sub);
         }
+        const category = document.createElement('p');
+        category.className = 'pj-category';
+        category.textContent = item.tag || 'Personal';
+        stickyTitleWrapper.appendChild(number);
+        stickyTitleWrapper.appendChild(title);
+        stickyTitleWrapper.appendChild(category);
 
-        const desc = document.createElement('p');
-        desc.className = 'custom-card-desc';
-        desc.textContent = item.desc;
-        body.appendChild(desc);
+        const stepsWrapper = document.createElement('div');
+        stepsWrapper.className = 'steps-wrapper';
+        const targetId = `custom-${item.id}-img1`;
+        const step = buildStep(item.title, item.desc, targetId, false);
+        step.classList.add('active');
+        stepsWrapper.appendChild(step);
 
-        card.appendChild(media);
-        card.appendChild(body);
-        customWorkGrid.appendChild(card);
-      });
-    };
+        textSide.appendChild(stickyTitleWrapper);
+        textSide.appendChild(stepsWrapper);
 
-    const renderAdminLists = () => {
-      if (!work1List || !projectList) return;
-      const workItems = getStored('work1Extras');
-      const projectItems = getStored('customProjects');
+        const visualSide = document.createElement('div');
+        visualSide.className = 'visual-side';
+        const stage = document.createElement('div');
+        stage.className = 'sticky-visual-stage';
+        const visual = buildVisual(item.image, item.title, targetId, false);
+        visual.classList.add('active');
+        stage.appendChild(visual);
+        visualSide.appendChild(stage);
 
-      work1List.innerHTML = workItems.length ? '' : '<p class="admin-empty">追加項目はまだありません。</p>';
-      workItems.forEach(item => {
-        const row = document.createElement('div');
-        row.className = 'admin-row';
-        row.innerHTML = `
-          <span>${escapeHtml(item.title)}</span>
-          <button type="button" data-id="${item.id}" data-kind="work1">削除</button>
-        `;
-        work1List.appendChild(row);
-      });
-
-      projectList.innerHTML = projectItems.length ? '' : '<p class="admin-empty">追加プロジェクトはまだありません。</p>';
-      projectItems.forEach(item => {
-        const row = document.createElement('div');
-        row.className = 'admin-row';
-        row.innerHTML = `
-          <span>${escapeHtml(item.title)}</span>
-          <button type="button" data-id="${item.id}" data-kind="project">削除</button>
-        `;
-        projectList.appendChild(row);
+        container.appendChild(textSide);
+        container.appendChild(visualSide);
+        section.appendChild(container);
+        customProjectsSlot.appendChild(section);
+        observeStep(step);
       });
     };
 
     const refreshAll = () => {
-      renderWork1Extras();
+      migrateLegacyExtras();
+      renderProjectExtras();
       renderCustomProjects();
-      renderAdminLists();
     };
 
-    const isAuthed = () => localStorage.getItem('adminAuth') === '1';
-
-    const updateAdminVisibility = () => {
-      if (adminParam === '1' || isAuthed()) {
-        adminToggle.hidden = false;
-      }
-    };
-
-    if (adminToggle) {
-      adminToggle.addEventListener('click', () => {
-        if (!isAuthed()) {
-          const input = window.prompt('Admin password');
-          if (input !== ADMIN_PASSWORD) {
-            window.alert('パスワードが違います');
-            return;
-          }
-          localStorage.setItem('adminAuth', '1');
-        }
-        adminPanel.hidden = !adminPanel.hidden;
-      });
-    }
-
-    if (adminClose) {
-      adminClose.addEventListener('click', () => {
-        adminPanel.hidden = true;
-      });
-    }
-
-    if (adminLogout) {
-      adminLogout.addEventListener('click', () => {
-        localStorage.removeItem('adminAuth');
-        adminPanel.hidden = true;
-        adminToggle.hidden = adminParam !== '1';
-      });
-    }
-
-    if (work1Form) {
-      work1Form.addEventListener('submit', async (event) => {
-        event.preventDefault();
-        const formData = new FormData(work1Form);
-        const title = String(formData.get('title') || '').trim();
-        const desc = String(formData.get('desc') || '').trim();
-        if (!title || !desc) return;
-        const image = await pickImage(work1Form.imageFile, work1Form.imageUrl);
-        if (!image) {
-          window.alert('画像URLか画像ファイルを指定してください');
-          return;
-        }
-        const extras = getStored('work1Extras');
-        extras.push({ id: Date.now().toString(), title, desc, image });
-        setStored('work1Extras', extras);
-        work1Form.reset();
-        refreshAll();
-      });
-    }
-
-    if (projectForm) {
-      projectForm.addEventListener('submit', async (event) => {
-        event.preventDefault();
-        const formData = new FormData(projectForm);
-        const title = String(formData.get('title') || '').trim();
-        const subtitle = String(formData.get('subtitle') || '').trim();
-        const category = String(formData.get('category') || '').trim();
-        const desc = String(formData.get('desc') || '').trim();
-        if (!title || !desc) return;
-        const image = await pickImage(projectForm.imageFile, projectForm.imageUrl);
-        if (!image) {
-          window.alert('画像URLか画像ファイルを指定してください');
-          return;
-        }
-        const projects = getStored('customProjects');
-        projects.push({ id: Date.now().toString(), title, subtitle, category, desc, image });
-        setStored('customProjects', projects);
-        projectForm.reset();
-        refreshAll();
-      });
-    }
-
-    const handleDelete = (event) => {
-      const button = event.target.closest('button[data-id]');
-      if (!button) return;
-      const id = button.getAttribute('data-id');
-      const kind = button.getAttribute('data-kind');
-      if (!id || !kind) return;
-      if (kind === 'work1') {
-        const extras = getStored('work1Extras').filter(item => item.id !== id);
-        setStored('work1Extras', extras);
-      }
-      if (kind === 'project') {
-        const projects = getStored('customProjects').filter(item => item.id !== id);
-        setStored('customProjects', projects);
-      }
-      refreshAll();
-    };
-
-    if (work1List) work1List.addEventListener('click', handleDelete);
-    if (projectList) projectList.addEventListener('click', handleDelete);
-
-    updateAdminVisibility();
     refreshAll();
   }); 
 

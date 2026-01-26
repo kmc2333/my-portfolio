@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Portfolio Edit</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body class="edit-page">
+  <header class="edit-top">
+    <a href="index.html" class="edit-back">Back to Portfolio</a>
+    <h1>Edit</h1>
+  </header>
+
+  <main class="edit-shell">
+    <section class="edit-card" id="login-card">
+      <h2>ログイン</h2>
+      <p class="edit-note">あなた専用のパスコードを入力してください。</p>
+      <form class="edit-form" id="login-form">
+        <label>
+          Passcode
+          <input type="password" id="passcode" required placeholder="パスコード">
+        </label>
+        <button type="submit">ログイン</button>
+      </form>
+    </section>
+
+    <section class="edit-card" id="editor-card" hidden>
+      <h2>編集フォーム</h2>
+      <p class="edit-note">保存はこのブラウザ内のみ有効です。編集後はサイトを更新してください。</p>
+
+      <form class="edit-form" id="edit-form">
+        <label>
+          追加方法
+          <select id="entry-mode">
+            <option value="existing">既存プロジェクトに追加</option>
+            <option value="new">新規プロジェクトを作成</option>
+          </select>
+        </label>
+
+        <div id="existing-fields">
+          <label>
+            プロジェクト選択
+            <select id="project-select">
+              <option value="pj01">01 映画と森night（企画・イベント開催）</option>
+              <option value="pj02">02 映画と森night（デザイン）</option>
+              <option value="pj03">03 私の自慢の隣人展（企画・展示）</option>
+              <option value="pj04">04 私の自慢の隣人展（デザイン）</option>
+              <option value="pj05">05 まるごと祭 2024</option>
+              <option value="pj06">06 2025まるごと祭ステージ</option>
+            </select>
+          </label>
+        </div>
+
+        <div id="new-fields" hidden>
+          <label>
+            新規プロジェクト名
+            <input type="text" id="project-name" placeholder="例：新しい企画">
+          </label>
+          <label>
+            タグ / カテゴリ
+            <input type="text" id="project-tag" placeholder="例：Design / Planning">
+          </label>
+        </div>
+
+        <label>
+          タイトル見出し
+          <input type="text" id="entry-title" required placeholder="例：言葉の体温">
+        </label>
+
+        <label>
+          テキスト
+          <textarea id="entry-desc" rows="4" required placeholder="プロジェクト説明"></textarea>
+        </label>
+
+        <label>
+          画像URL
+          <input type="url" id="entry-image-url" placeholder="https://...">
+        </label>
+
+        <label>
+          画像ファイル
+          <input type="file" id="entry-image-file" accept="image/*">
+        </label>
+
+        <div class="edit-actions">
+          <button type="submit">保存する</button>
+          <button type="button" class="edit-secondary" id="logout-btn">ログアウト</button>
+        </div>
+      </form>
+
+      <div class="edit-divider">
+        <h2>追加済み一覧</h2>
+        <div class="edit-list" id="extras-list"></div>
+        <div class="edit-list" id="projects-list"></div>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    const PASSCODE = 'Kmk328564';
+    const PROJECT_LABELS = {
+      pj01: '01 映画と森night（企画・イベント開催）',
+      pj02: '02 映画と森night（デザイン）',
+      pj03: '03 私の自慢の隣人展（企画・展示）',
+      pj04: '04 私の自慢の隣人展（デザイン）',
+      pj05: '05 まるごと祭 2024',
+      pj06: '06 2025まるごと祭ステージ'
+    };
+
+    const loginCard = document.getElementById('login-card');
+    const editorCard = document.getElementById('editor-card');
+    const loginForm = document.getElementById('login-form');
+    const editForm = document.getElementById('edit-form');
+    const modeSelect = document.getElementById('entry-mode');
+    const existingFields = document.getElementById('existing-fields');
+    const newFields = document.getElementById('new-fields');
+    const logoutBtn = document.getElementById('logout-btn');
+    const extrasList = document.getElementById('extras-list');
+    const projectsList = document.getElementById('projects-list');
+
+    const getStoredArray = (key) => {
+      try {
+        return JSON.parse(localStorage.getItem(key) || '[]');
+      } catch (err) {
+        return [];
+      }
+    };
+
+    const getStoredObject = (key) => {
+      try {
+        return JSON.parse(localStorage.getItem(key) || '{}');
+      } catch (err) {
+        return {};
+      }
+    };
+
+    const setStored = (key, value) => {
+      localStorage.setItem(key, JSON.stringify(value));
+    };
+
+    const readFileAsDataUrl = (file) => {
+      return new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.onload = () => resolve(reader.result);
+        reader.onerror = () => reject(new Error('読み込みに失敗しました'));
+        reader.readAsDataURL(file);
+      });
+    };
+
+    const pickImage = async (fileInput, urlInput) => {
+      if (fileInput && fileInput.files && fileInput.files[0]) {
+        return readFileAsDataUrl(fileInput.files[0]);
+      }
+      const url = urlInput ? urlInput.value.trim() : '';
+      return url;
+    };
+
+    const isAuthed = () => localStorage.getItem('editAuth') === '1';
+
+    const setAuth = (value) => {
+      localStorage.setItem('editAuth', value ? '1' : '0');
+    };
+
+    const updateMode = () => {
+      const mode = modeSelect.value;
+      existingFields.hidden = mode !== 'existing';
+      newFields.hidden = mode !== 'new';
+    };
+
+    const showEditor = () => {
+      loginCard.hidden = true;
+      editorCard.hidden = false;
+    };
+
+    const showLogin = () => {
+      loginCard.hidden = false;
+      editorCard.hidden = true;
+    };
+
+    const renderLists = () => {
+      const extrasByProject = getStoredObject('projectExtras');
+      const projects = getStoredArray('customProjects');
+
+      extrasList.innerHTML = '';
+      Object.keys(PROJECT_LABELS).forEach(projectId => {
+        const items = extrasByProject[projectId] || [];
+        items.forEach(item => {
+          const row = document.createElement('div');
+          row.className = 'edit-row';
+          row.innerHTML = `
+            <span>${PROJECT_LABELS[projectId]} / ${item.title}</span>
+            <button type="button" data-kind="extra" data-project="${projectId}" data-id="${item.id}">削除</button>
+          `;
+          extrasList.appendChild(row);
+        });
+      });
+      if (!extrasList.children.length) {
+        extrasList.innerHTML = '<p class="edit-note">既存プロジェクトへの追加はまだありません。</p>';
+      }
+
+      projectsList.innerHTML = '';
+      projects.forEach(item => {
+        const row = document.createElement('div');
+        row.className = 'edit-row';
+        row.innerHTML = `
+          <span>新規: ${item.projectName || item.title}</span>
+          <button type="button" data-kind="project" data-id="${item.id}">削除</button>
+        `;
+        projectsList.appendChild(row);
+      });
+      if (!projectsList.children.length) {
+        projectsList.innerHTML = '<p class="edit-note">新規プロジェクトはまだありません。</p>';
+      }
+    };
+
+    loginForm.addEventListener('submit', (event) => {
+      event.preventDefault();
+      const input = document.getElementById('passcode').value.trim();
+      if (input !== PASSCODE) {
+        window.alert('パスコードが違います');
+        return;
+      }
+      setAuth(true);
+      showEditor();
+    });
+
+    modeSelect.addEventListener('change', updateMode);
+
+    editForm.addEventListener('submit', async (event) => {
+      event.preventDefault();
+      const mode = modeSelect.value;
+      const title = document.getElementById('entry-title').value.trim();
+      const desc = document.getElementById('entry-desc').value.trim();
+      const imageUrlInput = document.getElementById('entry-image-url');
+      const imageFileInput = document.getElementById('entry-image-file');
+      const image = await pickImage(imageFileInput, imageUrlInput);
+
+      if (!title || !desc) return;
+      if (!image) {
+        window.alert('画像URLか画像ファイルを指定してください');
+        return;
+      }
+
+      if (mode === 'existing') {
+        const projectId = document.getElementById('project-select').value;
+        const extrasByProject = getStoredObject('projectExtras');
+        const items = extrasByProject[projectId] || [];
+        items.push({ id: Date.now().toString(), title, desc, image });
+        extrasByProject[projectId] = items;
+        setStored('projectExtras', extrasByProject);
+      } else {
+        const projectName = document.getElementById('project-name').value.trim();
+        const tag = document.getElementById('project-tag').value.trim();
+        if (!projectName) {
+          window.alert('新規プロジェクト名を入力してください');
+          return;
+        }
+        const projects = getStoredArray('customProjects');
+        projects.push({
+          id: Date.now().toString(),
+          projectName,
+          tag,
+          title,
+          desc,
+          image
+        });
+        setStored('customProjects', projects);
+      }
+
+      editForm.reset();
+      updateMode();
+      renderLists();
+    });
+
+    const handleDelete = (event) => {
+      const button = event.target.closest('button[data-id]');
+      if (!button) return;
+      const kind = button.getAttribute('data-kind');
+      const id = button.getAttribute('data-id');
+      if (kind === 'extra') {
+        const projectId = button.getAttribute('data-project');
+        const extrasByProject = getStoredObject('projectExtras');
+        const nextItems = (extrasByProject[projectId] || []).filter(item => item.id !== id);
+        extrasByProject[projectId] = nextItems;
+        setStored('projectExtras', extrasByProject);
+      }
+      if (kind === 'project') {
+        const projects = getStoredArray('customProjects').filter(item => item.id !== id);
+        setStored('customProjects', projects);
+      }
+      renderLists();
+    };
+
+    extrasList.addEventListener('click', handleDelete);
+    projectsList.addEventListener('click', handleDelete);
+
+    logoutBtn.addEventListener('click', () => {
+      setAuth(false);
+      showLogin();
+    });
+
+    updateMode();
+    if (isAuthed()) {
+      showEditor();
+    }
+    renderLists();
+  </script>
+</body>
+</html>
