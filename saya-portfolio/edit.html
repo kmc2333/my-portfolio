@@ -46,14 +46,7 @@
         <div id="existing-fields">
           <label>
             プロジェクト選択
-            <select id="project-select">
-              <option value="pj01">01 映画と森night（企画・イベント開催）</option>
-              <option value="pj02">02 映画と森night（デザイン）</option>
-              <option value="pj03">03 私の自慢の隣人展（企画・展示）</option>
-              <option value="pj04">04 私の自慢の隣人展（デザイン）</option>
-              <option value="pj05">05 まるごと祭 2024</option>
-              <option value="pj06">06 2025まるごと祭ステージ</option>
-            </select>
+            <select id="project-select"></select>
           </label>
         </div>
 
@@ -120,6 +113,7 @@
     const modeSelect = document.getElementById('entry-mode');
     const existingFields = document.getElementById('existing-fields');
     const newFields = document.getElementById('new-fields');
+    const projectSelect = document.getElementById('project-select');
     const logoutBtn = document.getElementById('logout-btn');
     const extrasList = document.getElementById('extras-list');
     const projectsList = document.getElementById('projects-list');
@@ -173,6 +167,31 @@
       newFields.hidden = mode !== 'new';
     };
 
+    const renderProjectOptions = () => {
+      const projects = getStoredArray('customProjects');
+      projectSelect.innerHTML = '';
+      Object.entries(PROJECT_LABELS).forEach(([id, label]) => {
+        const option = document.createElement('option');
+        option.value = id;
+        option.textContent = label;
+        projectSelect.appendChild(option);
+      });
+      projects.forEach(item => {
+        const option = document.createElement('option');
+        option.value = `custom-${item.id}`;
+        option.textContent = `新規: ${item.projectName || item.title}`;
+        projectSelect.appendChild(option);
+      });
+    };
+
+    const getProjectLabel = (projectId, projects) => {
+      if (PROJECT_LABELS[projectId]) return PROJECT_LABELS[projectId];
+      const customId = projectId.replace('custom-', '');
+      const custom = projects.find(item => item.id === customId);
+      if (custom) return `新規: ${custom.projectName || custom.title}`;
+      return projectId;
+    };
+
     const showEditor = () => {
       loginCard.hidden = true;
       editorCard.hidden = false;
@@ -188,13 +207,13 @@
       const projects = getStoredArray('customProjects');
 
       extrasList.innerHTML = '';
-      Object.keys(PROJECT_LABELS).forEach(projectId => {
+      Object.keys(extrasByProject).forEach(projectId => {
         const items = extrasByProject[projectId] || [];
         items.forEach(item => {
           const row = document.createElement('div');
           row.className = 'edit-row';
           row.innerHTML = `
-            <span>${PROJECT_LABELS[projectId]} / ${item.title}</span>
+            <span>${getProjectLabel(projectId, projects)} / ${item.title}</span>
             <button type="button" data-kind="extra" data-project="${projectId}" data-id="${item.id}">削除</button>
           `;
           extrasList.appendChild(row);
@@ -248,7 +267,7 @@
       }
 
       if (mode === 'existing') {
-        const projectId = document.getElementById('project-select').value;
+        const projectId = projectSelect.value;
         const extrasByProject = getStoredObject('projectExtras');
         const items = extrasByProject[projectId] || [];
         items.push({ id: Date.now().toString(), title, desc, image });
@@ -275,6 +294,7 @@
 
       editForm.reset();
       updateMode();
+      renderProjectOptions();
       renderLists();
     });
 
@@ -293,8 +313,12 @@
       if (kind === 'project') {
         const projects = getStoredArray('customProjects').filter(item => item.id !== id);
         setStored('customProjects', projects);
+        const extrasByProject = getStoredObject('projectExtras');
+        delete extrasByProject[`custom-${id}`];
+        setStored('projectExtras', extrasByProject);
       }
       renderLists();
+      renderProjectOptions();
     };
 
     extrasList.addEventListener('click', handleDelete);
@@ -306,6 +330,7 @@
     });
 
     updateMode();
+    renderProjectOptions();
     if (isAuthed()) {
       showEditor();
     }

@@ -830,6 +830,7 @@
     const renderCustomProjects = () => {
       if (!customProjectsSlot) return;
       const projects = getStoredArray('customProjects');
+      const extrasByProject = getStoredObject('projectExtras');
       customProjectsSlot.innerHTML = '';
 
       projects.forEach((item, index) => {
@@ -852,14 +853,6 @@
         const title = document.createElement('h2');
         title.className = 'pj-title';
         title.textContent = item.projectName || item.title;
-        if (item.tag) {
-          const lineBreak = document.createElement('br');
-          const sub = document.createElement('span');
-          sub.className = 'pj-sub';
-          sub.textContent = item.tag;
-          title.appendChild(lineBreak);
-          title.appendChild(sub);
-        }
         const category = document.createElement('p');
         category.className = 'pj-category';
         category.textContent = item.tag || 'Personal';
@@ -869,10 +862,18 @@
 
         const stepsWrapper = document.createElement('div');
         stepsWrapper.className = 'steps-wrapper';
-        const targetId = `custom-${item.id}-img1`;
-        const step = buildStep(item.title, item.desc, targetId, false);
-        step.classList.add('active');
-        stepsWrapper.appendChild(step);
+        const baseTargetId = `custom-${item.id}-img1`;
+        const baseStep = buildStep(item.title, item.desc, baseTargetId, false);
+        baseStep.classList.add('active');
+        stepsWrapper.appendChild(baseStep);
+
+        const extraItems = extrasByProject[`custom-${item.id}`] || [];
+        extraItems.forEach((extra, extraIndex) => {
+          const targetId = `custom-${item.id}-extra-${extraIndex + 1}`;
+          const step = buildStep(extra.title, extra.desc, targetId, true);
+          stepsWrapper.appendChild(step);
+          observeStep(step);
+        });
 
         textSide.appendChild(stickyTitleWrapper);
         textSide.appendChild(stepsWrapper);
@@ -881,16 +882,23 @@
         visualSide.className = 'visual-side';
         const stage = document.createElement('div');
         stage.className = 'sticky-visual-stage';
-        const visual = buildVisual(item.image, item.title, targetId, false);
-        visual.classList.add('active');
-        stage.appendChild(visual);
+        const baseVisual = buildVisual(item.image, item.title, baseTargetId, false);
+        baseVisual.classList.add('active');
+        stage.appendChild(baseVisual);
+
+        extraItems.forEach((extra, extraIndex) => {
+          const targetId = `custom-${item.id}-extra-${extraIndex + 1}`;
+          const visual = buildVisual(extra.image, extra.title, targetId, true);
+          stage.appendChild(visual);
+        });
+
         visualSide.appendChild(stage);
 
         container.appendChild(textSide);
         container.appendChild(visualSide);
         section.appendChild(container);
         customProjectsSlot.appendChild(section);
-        observeStep(step);
+        observeStep(baseStep);
       });
     };
 
