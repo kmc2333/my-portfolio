@@ -712,6 +712,32 @@
 
     document.querySelectorAll('.step').forEach(step => observeStep(step));
 
+    // ▼ 3.5 Mobile Flow (画像→見出し→テキストの順に並べる)
+    const setupMobileFlow = () => {
+      const isMobile = window.matchMedia('(max-width: 900px)').matches;
+      if (!isMobile) return;
+
+      document.querySelectorAll('.project-section').forEach(section => {
+        if (section.dataset.mobileFlow === '1') return;
+        const steps = section.querySelectorAll('.step');
+        steps.forEach(step => {
+          if (step.dataset.mediaInjected === '1') return;
+          const targetId = step.getAttribute('data-target');
+          if (!targetId) return;
+          const visual = section.querySelector(`#${CSS.escape(targetId)} img`);
+          if (!visual) return;
+          const media = document.createElement('div');
+          media.className = 'step-media';
+          media.appendChild(visual.cloneNode(true));
+          step.insertBefore(media, step.firstChild);
+          step.dataset.mediaInjected = '1';
+        });
+        section.classList.add('mobile-stack');
+        section.dataset.mobileFlow = '1';
+      });
+    };
+
+    setupMobileFlow();
 
     // ▼ 4. Fade Out Text (文字が薄くなる演出)
     window.addEventListener('scroll', () => {

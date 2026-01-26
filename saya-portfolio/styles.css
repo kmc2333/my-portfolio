@@ -468,70 +468,41 @@ figcaption {
   .text-side, .visual-side { width: 100%; padding: 0; }
   
   .sticky-title-wrapper {
-    position: relative; top: 0; margin-bottom: 2rem; padding: 0;
-    border-bottom: 1px solid #eee; padding-bottom: 1rem; z-index: 1;
+    position: sticky; top: 0; margin-bottom: 2rem; padding: 1rem 0;
+    border-bottom: 1px solid #eee; background: rgba(250,250,250,0.95);
+    backdrop-filter: blur(6px); z-index: 5;
   }
   .pj-number { font-size: 2.5rem; margin-bottom: 0.5rem; }
   .pj-title { font-size: 1.6rem; }
   
-  /* スマホでは画像を先に少し見せる、あるいは上に固定 */
-  .sticky-visual-stage {
-  position: relative;
-  width: 100%;
-  height: 100vh; /* 画面いっぱいの高さ */
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  overflow: hidden;
-}
-
-/* 画像グループ（1枚1枚のカード）の設定 */
-.visual-group {
-  position: absolute;  /* すべての画像を同じ位置に重ねる */
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
+  .project-section.mobile-stack .visual-side { display: none; }
+  .step-media {
+    width: 100%;
+    aspect-ratio: 4 / 3;
+    overflow: hidden;
+    border-radius: 12px;
+    margin-bottom: 1.5rem;
+  }
+  .step-media img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
   
-  /* ★ここが最重要：普段は「透明」にして隠す */
-  opacity: 0;
-  visibility: hidden;
-  z-index: 1; 
-  
-  /* ふわっと切り替わるアニメーション */
-  transition: opacity 0.5s ease, visibility 0.5s ease;
-}
-
-/* JSで「active」クラスがついた時だけ表示 */
-.visual-group.active {
-  /* ★ここが最重要：activeがついたら「不透明（見える）」にする */
-  opacity: 1;
-  visibility: visible;
-  z-index: 10; /* 前面に持ってくる */
-}
-
-/* 画像自体の設定 */
-.visual-group img {
-  width: 100%;
-  height: 100%;
-  object-fit: contain; /* 画像全体が見えるように調整 */
-}
-  
-  /* テキストは画像の上を流れるように */
+  /* テキストブロック */
   .steps-wrapper {
-    position: relative; z-index: 10;
-    background: linear-gradient(to bottom, rgba(250,250,250,0) 0%, rgba(250,250,250,0.9) 10%);
-    padding-top: 2rem; margin-top: -10vh; /* 少し画像に被せる */
+    position: relative; z-index: 2;
+    padding-top: 1rem;
   }
   .step {
-    min-height: 50vh; /* スクロール量削減 */
+    min-height: auto;
     opacity: 1; /* スマホでは常時表示 */
     padding-right: 0;
-    margin-bottom: 4rem;
-    /* 読みやすくするための背景 */
-    background: rgba(255,255,255,0.8);
-    backdrop-filter: blur(5px);
-    padding: 2rem; border-radius: 8px;
+    margin-bottom: 3rem;
+    background: #fff;
+    padding: 1.5rem;
+    border-radius: 12px;
+    box-shadow: 0 16px 30px rgba(0,0,0,0.05);
   }
   .step-catch { font-size: 1.4rem; }
   
