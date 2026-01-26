@@ -488,8 +488,8 @@ figcaption {
     z-index: 5;
     width: 100vw;
     margin-left: calc(50% - 50vw);
-    padding-left: 5%;
-    padding-right: 5%;
+    padding-left: 6%;
+    padding-right: 6%;
   }
   .pj-number { font-size: 2.5rem; margin-bottom: 0.5rem; }
   .pj-title { font-size: 1.6rem; }
@@ -499,7 +499,7 @@ figcaption {
     width: 100%;
     aspect-ratio: 4 / 3;
     overflow: hidden;
-    margin-bottom: 1.5rem;
+    margin-bottom: 1rem;
   }
   .step-media img {
     width: 100%;
@@ -516,17 +516,19 @@ figcaption {
     min-height: auto;
     opacity: 1; /* スマホでは常時表示 */
     padding-right: 0;
-    margin-bottom: 3rem;
+    margin-bottom: 4rem;
     background: transparent;
     padding: 0;
     border-radius: 0;
     box-shadow: none;
   }
   .step-catch { font-size: 1.4rem; }
+  .step-catch { margin-bottom: 1rem; }
+  .step-desc { margin-top: 0.5rem; }
 
   .marquee-content02 img {
-    width: 260px;
-    height: 170px;
+    width: 200px;
+    height: 130px;
   }
   
   /* Reset Flip Padding */
