@@ -418,3 +418,25 @@ figcaption {
   .contact-form { padding: 1.5rem; }
 }
 
+/* =========================================
+   11. MARQUEE SECTION 02
+   ========================================= */
+.marquee-section02 {
+  padding: 80px 0;
+  overflow: hidden; white-space: nowrap; margin-bottom: 140px;
+}
+.marquee-track02 { display: flex; gap: 40px; width: fit-content; }
+.marquee-content02 {
+  display: flex; gap: 40px;
+  animation: marquee-anim var(--marquee-speed) linear infinite;
+}
+.marquee-content02 img {
+  width: 530px; height: 320px; /* 縦長比率 */
+  object-fit: cover;  transition: filter 0.3s;
+}
+
+
+@keyframes marquee-anim {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-100%); }
+}
