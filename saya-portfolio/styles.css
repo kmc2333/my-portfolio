@@ -527,12 +527,16 @@ figcaption {
   .step-desc { margin-top: 0.5rem; }
 
   .marquee-content02 img {
-    width: 200px;
-    height: 130px;
+    width: 160px;
+    height: 105px;
   }
   
   /* Reset Flip Padding */
   .project--flip .text-side { padding-left: 0; }
+  .project--flip .sticky-title-wrapper {
+    padding-left: 6%;
+    padding-right: 6%;
+  }
 
   /* Grid Adjustments for Mobile */
   .grid-4 { grid-template-columns: 1fr; grid-template-rows: repeat(4, 1fr); gap: 10px; }
