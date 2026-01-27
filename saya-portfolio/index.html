@@ -122,10 +122,17 @@
     
     <div class="container" style="padding-top: 100px;">
       <h2 class="section-heading mb-big">WORK</h2>
+      <div class="work-filter">
+        <button type="button" class="filter-btn active" data-filter="all">すべて</button>
+        <button type="button" class="filter-btn" data-filter="design">デザイン</button>
+        <button type="button" class="filter-btn" data-filter="planning">企画</button>
+        <button type="button" class="filter-btn" data-filter="direction">ディレクション</button>
+        <button type="button" class="filter-btn" data-filter="other">その他</button>
+      </div>
       <p style="margin-bottom: 4rem;">Scroll Down</p>
     </div>
 
-    <section class="project-section" id="pj01">
+    <section class="project-section" id="pj01" data-tags="planning">
       <div class="project-container">
         <div class="text-side">
           <div class="sticky-title-wrapper">
@@ -189,7 +196,7 @@
       </div>
     </section>
 
-    <section class="project-section project--flip" id="pj02">
+    <section class="project-section project--flip" id="pj02" data-tags="design">
       <div class="project-container">
         <div class="text-side">
           <div class="sticky-title-wrapper">
@@ -251,7 +258,7 @@
       </div>
     </section>
 
-    <section class="project-section" id="pj03">
+    <section class="project-section" id="pj03" data-tags="planning">
       <div class="project-container">
         <div class="text-side">
           <div class="sticky-title-wrapper">
@@ -337,7 +344,7 @@
       </div>
     </section>
 
-    <section class="project-section project--flip" id="pj04">
+    <section class="project-section project--flip" id="pj04" data-tags="design">
   <div class="project-container">
     <div class="text-side">
       <div class="sticky-title-wrapper">
@@ -447,7 +454,7 @@
   </div>
 </section>
 
-    <section class="project-section" id="pj05">
+    <section class="project-section" id="pj05" data-tags="design">
       <div class="project-container">
         <div class="text-side">
           <div class="sticky-title-wrapper">
@@ -490,7 +497,7 @@
       </div>
     </section>
 
-    <section class="project-section project--flip" id="pj06">
+    <section class="project-section project--flip" id="pj06" data-tags="planning">
       <div class="project-container">
         <div class="text-side">
           <div class="sticky-title-wrapper">
@@ -692,6 +699,33 @@
 
     setupMobileFlow();
 
+    // ▼ 3.6 Work Filter (タグで絞り込み)
+    let currentFilter = 'all';
+    const applyFilter = (filter) => {
+      currentFilter = filter;
+      document.querySelectorAll('.project-section').forEach(section => {
+        const rawTags = section.dataset.tags || '';
+        const tags = rawTags.split(',').map(tag => tag.trim().toLowerCase()).filter(Boolean);
+        const shouldShow = filter === 'all' || tags.includes(filter);
+        section.style.display = shouldShow ? '' : 'none';
+      });
+      document.querySelectorAll('.filter-btn').forEach(btn => {
+        btn.classList.toggle('active', btn.dataset.filter === filter);
+      });
+    };
+
+    const setupWorkFilter = () => {
+      const buttons = document.querySelectorAll('.filter-btn');
+      if (!buttons.length) return;
+      buttons.forEach(btn => {
+        btn.addEventListener('click', () => {
+          applyFilter(btn.dataset.filter || 'all');
+        });
+      });
+    };
+
+    setupWorkFilter();
+
     // ▼ 4. Fade Out Text (文字が薄くなる演出)
     window.addEventListener('scroll', () => {
       if (window.matchMedia('(max-width: 900px)').matches) {
@@ -823,6 +857,8 @@
         const shouldFlip = index % 2 === 1;
         section.className = shouldFlip ? 'project-section project--flip' : 'project-section';
         section.id = `custom-${item.id}`;
+        const tagKey = (item.tagKey || item.tag || 'other').toLowerCase();
+        section.dataset.tags = tagKey;
 
         const container = document.createElement('div');
         container.className = 'project-container';
@@ -840,7 +876,7 @@
         title.textContent = item.projectName || item.title;
         const category = document.createElement('p');
         category.className = 'pj-category';
-        category.textContent = item.tag || 'Personal';
+        category.textContent = item.tagLabel || item.tag || 'Personal';
         stickyTitleWrapper.appendChild(number);
         stickyTitleWrapper.appendChild(title);
         stickyTitleWrapper.appendChild(category);
@@ -891,6 +927,7 @@
       migrateLegacyExtras();
       renderProjectExtras();
       renderCustomProjects();
+      applyFilter(currentFilter);
     };
 
     refreshAll();

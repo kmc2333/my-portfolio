@@ -57,7 +57,17 @@
           </label>
           <label>
             タグ / カテゴリ
-            <input type="text" id="project-tag" placeholder="例：Design / Planning">
+            <select id="project-tag">
+              <option value="design">デザイン</option>
+              <option value="planning">企画</option>
+              <option value="direction">ディレクション</option>
+              <option value="other">その他</option>
+              <option value="custom">カスタム</option>
+            </select>
+          </label>
+          <label id="project-tag-custom-wrapper" hidden>
+            カスタムタグ
+            <input type="text" id="project-tag-custom" placeholder="例：Branding">
           </label>
         </div>
 
@@ -114,6 +124,9 @@
     const existingFields = document.getElementById('existing-fields');
     const newFields = document.getElementById('new-fields');
     const projectSelect = document.getElementById('project-select');
+    const tagSelect = document.getElementById('project-tag');
+    const tagCustomWrapper = document.getElementById('project-tag-custom-wrapper');
+    const tagCustomInput = document.getElementById('project-tag-custom');
     const logoutBtn = document.getElementById('logout-btn');
     const extrasList = document.getElementById('extras-list');
     const projectsList = document.getElementById('projects-list');
@@ -165,6 +178,12 @@
       const mode = modeSelect.value;
       existingFields.hidden = mode !== 'existing';
       newFields.hidden = mode !== 'new';
+    };
+
+    const updateTagCustom = () => {
+      if (!tagSelect || !tagCustomWrapper) return;
+      const isCustom = tagSelect.value === 'custom';
+      tagCustomWrapper.hidden = !isCustom;
     };
 
     const renderProjectOptions = () => {
@@ -250,6 +269,9 @@
     });
 
     modeSelect.addEventListener('change', updateMode);
+    if (tagSelect) {
+      tagSelect.addEventListener('change', updateTagCustom);
+    }
 
     editForm.addEventListener('submit', async (event) => {
       event.preventDefault();
@@ -275,16 +297,31 @@
         setStored('projectExtras', extrasByProject);
       } else {
         const projectName = document.getElementById('project-name').value.trim();
-        const tag = document.getElementById('project-tag').value.trim();
+        const tagKey = tagSelect ? tagSelect.value : 'other';
+        const tagLabelMap = {
+          design: 'デザイン',
+          planning: '企画',
+          direction: 'ディレクション',
+          other: 'その他',
+          custom: ''
+        };
+        const customLabel = tagCustomInput ? tagCustomInput.value.trim() : '';
+        const tagLabel = tagKey === 'custom' ? customLabel : (tagLabelMap[tagKey] || 'その他');
+        const safeTagKey = tagKey === 'custom' ? (customLabel || 'other').toLowerCase() : tagKey;
         if (!projectName) {
           window.alert('新規プロジェクト名を入力してください');
+          return;
+        }
+        if (tagKey === 'custom' && !customLabel) {
+          window.alert('カスタムタグを入力してください');
           return;
         }
         const projects = getStoredArray('customProjects');
         projects.push({
           id: Date.now().toString(),
           projectName,
-          tag,
+          tagKey: safeTagKey,
+          tagLabel,
           title,
           desc,
           image
@@ -294,6 +331,7 @@
 
       editForm.reset();
       updateMode();
+      updateTagCustom();
       renderProjectOptions();
       renderLists();
     });
@@ -330,6 +368,7 @@
     });
 
     updateMode();
+    updateTagCustom();
     renderProjectOptions();
     if (isAuthed()) {
       showEditor();
