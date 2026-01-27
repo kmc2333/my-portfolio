@@ -550,11 +550,6 @@ figcaption {
   .step-catch { margin-bottom: 1rem; }
   .step-desc { margin-top: 0.5rem; }
 
-  .marquee-content02 img {
-    width: 220px;
-    height: 180px;
-  }
-  
   /* Reset Flip Padding */
   .project--flip .text-side { padding-left: 0; }
   .project--flip .sticky-title-wrapper {
