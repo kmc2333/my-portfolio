@@ -168,10 +168,10 @@
       return url;
     };
 
-    const isAuthed = () => localStorage.getItem('editAuth') === '1';
+    const isAuthed = () => sessionStorage.getItem('editSession') === '1';
 
     const setAuth = (value) => {
-      localStorage.setItem('editAuth', value ? '1' : '0');
+      sessionStorage.setItem('editSession', value ? '1' : '0');
     };
 
     const updateMode = () => {
@@ -370,9 +370,7 @@
     updateMode();
     updateTagCustom();
     renderProjectOptions();
-    if (isAuthed()) {
-      showEditor();
-    }
+    if (isAuthed()) showEditor();
     renderLists();
   </script>
 </body>
